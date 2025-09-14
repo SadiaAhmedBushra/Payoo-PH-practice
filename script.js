@@ -1,3 +1,11 @@
+// Reusable Function for getting input values
+function getInputValueNumber(inputId) {
+    const inputValue = document.getElementById(inputId).value;
+    const convertedInput = parseFloat(inputValue);
+
+    return convertedInput;
+};
+
 // Log In Button Functionality
 
 document.getElementById('logInButton').
@@ -6,13 +14,10 @@ document.getElementById('logInButton').
         const mobileNumber = 1234567891011;
         const pin = 1234;
 
-        const userMobileNumber = document.getElementById('mobile-number').value;
-        const userPin = document.getElementById('pin-number').value;
+        const userMobileNumber = getInputValueNumber('mobile-number');
+        const userPin = getInputValueNumber('pin-number');
 
-        const convertedMobileNumber = parseInt(userMobileNumber);
-        const convertedPin = parseInt(userPin);
-
-        if(convertedMobileNumber === mobileNumber && convertedPin === pin) {
+        if(userMobileNumber === mobileNumber && userPin === pin) {
             window.location.href = 'home.html';
         } else {
             alert('Invalid Mobile Number or Pin. Please try again.');
