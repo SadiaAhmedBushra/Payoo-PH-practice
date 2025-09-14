@@ -1,3 +1,15 @@
+
+const pin = 1234;
+const transactionData=[];
+
+
+
+
+
+
+
+
+
 // Reusable Function for getting input values in number format
 function getInputValueNumber(inputId) {
     const inputValue = document.getElementById(inputId).value;
@@ -61,7 +73,6 @@ document.getElementById('add-amount-button').
         e.preventDefault();
 
         const accountNumber = 12345678910;
-        const pin = 1234;
 
         const userBank = getInputValue('bank');
         const userAccountNumber = getInputValue('account-number');
@@ -85,6 +96,13 @@ document.getElementById('add-amount-button').
 
         const updatedBalance = availableBalance + userAmountToAdd;
         setInnerText('available-balance', updatedBalance);
+
+        const data = {
+            name:"Add Money",
+            date: new Date().toLocaleTimeString()
+        }
+
+        transactionData.push(data);
     });
 
 
@@ -95,7 +113,6 @@ document.getElementById('add-amount-button').
         e.preventDefault();
 
         const agentNumber = 12345678910;
-        const pin = 1234;
 
         const userAgentNumber = getInputValue('agent-number');
 
@@ -119,6 +136,13 @@ document.getElementById('add-amount-button').
 
         const updatedBalance = availableBalance - userAmountToWithdraw;
         setInnerText('available-balance', updatedBalance);
+
+        const data = {
+            name:"Withdraw Money",
+            date: new Date().toLocaleTimeString()
+        }
+
+        transactionData.push(data);
     });
 
     // transfer money button event listener
@@ -128,7 +152,6 @@ document.getElementById('add-amount-button').
         e.preventDefault();
 
         const accountNumber = 12345678910;
-        const pin = 1234;
 
         const userAccountNumber = getInputValue('account-number-2transfer');
 
@@ -152,6 +175,13 @@ document.getElementById('add-amount-button').
 
         const updatedBalance = availableBalance - userAmountToTransfer;
         setInnerText('available-balance', updatedBalance);
+
+        const data = {
+            name:"Transfer Money",
+            date: new Date().toLocaleTimeString()
+        }
+
+        transactionData.push(data);
     });
 
     // transfer money button event listener
@@ -177,6 +207,13 @@ document.getElementById('add-amount-button').
         const updatedBalance = availableBalance + bonus;
         setInnerText('available-balance', updatedBalance);
         alert('Congratulations! You have received 100 taka bonus.');
+
+        const data = {
+            name:"Get Bonus",
+            date: new Date().toLocaleTimeString()
+        }
+
+        transactionData.push(data);
     });
 
     // Pay Bill button event listener
@@ -186,7 +223,6 @@ document.getElementById('pay-now-button').
         e.preventDefault();
 
         const accountNumber = 12345678910;
-        const pin = 1234;
 
         const userBank = getInputValue('bank2pay');
         const userAccountNumber = getInputValue('biller-account-number');
@@ -210,7 +246,21 @@ document.getElementById('pay-now-button').
 
         const updatedBalance = availableBalance - userAmountToPay;
         setInnerText('available-balance', updatedBalance);
+
+        const data = {
+            name:"Pay Bill",
+            date: new Date().toLocaleTimeString()
+        }
+
+        transactionData.push(data);
     });
+
+    // Transaction button event listener
+    // document.getElementById('Transactions-Button').
+    // addEventListener('click', function(){
+        
+
+    // });
 
     // Toggle down menu
 
@@ -240,5 +290,42 @@ document.getElementById('pay-now-button').
     document.getElementById('Pay-Bill-Button').addEventListener('click', function() {
         handleToggleDisplay('Pay-Bill-Section');
         handleToggleActiveButton('Pay-Bill-Button');
+
+    });
+
+    document.getElementById('Transactions-Button').addEventListener('click', function() {
+        handleToggleDisplay('Transactions-Section');
+        handleToggleActiveButton('Transactions-Button');
+
+        const transactionContainer = document.getElementById('transaction-container');
+        transactionContainer.innerHTML = "";
+
+         if (transactionData.length === 0) {
+        transactionContainer.innerHTML = `
+            <p class="text-gray-500 text-center">No transactions yet.</p>
+        `;
+        return;
+    }
+
+        for (const data of transactionData){
+            const div = document.createElement("div");
+            div.innerHTML = `
+            <div class="bg-white rounded-xl p-3 flex justify-between items-center">
+                <div class="flex items-center ">
+                    <div class="bg-[#f4f5f7] border-2 border-gray-200 rounded-full p-3">
+                        <img src="assets/wallet1.png" alt="add money logo" class="mx-auto">
+                    </div>
+                    <div class="ml-3">
+                        <h1>${data.name}</h1>
+                        <p>${data.date}</p>
+                    </div>
+                </div>
+
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+            </div>
+            `
+
+            transactionContainer.appendChild(div);
+        }
 
     });
